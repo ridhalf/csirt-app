@@ -1,6 +1,5 @@
 <?php
 
-use constant\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->enum('role', [Role::SUPERADMIN, Role::ADMIN,Role::USER])->default('admin');
-            $table->rememberToken();
+        Schema::create('features', function (Blueprint $table) {
+            $table->integerIncrements('id');
+            $table->string('code')->unique();
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->string('description');
+            $table->string('image')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('features');
     }
 };
